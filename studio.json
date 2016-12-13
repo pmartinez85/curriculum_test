@@ -1,8 +1,8 @@
 {
     "version": 2,
     "paths": [
-        "/home/sergi/Code/scool/curriculum",
-        "/home/sergi/Code/acacha/periods",
+        "../../scool/curriculum",
+        "../../scool/acacha/periods",
         "../../scool/ebre_escool_model"
     ]
 }
