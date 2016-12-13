@@ -100,7 +100,7 @@ class StudiesControllerTest extends TestCase
         $this->login();
         //$this->post('studies');
         $this->post('studies',[]);
-        //dd($this->response);
+        dd($this->response);
         //$this->assertRedirectedToRoute('studies.create');
 
     }
