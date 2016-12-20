@@ -1,9 +1,11 @@
 <?php
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-
-use Illuminate\Support\Collection;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Input;
 use Scool\Curriculum\Models\Study;
 use Scool\Curriculum\Repositories\StudyRepository;
+
 
 
 /**
@@ -16,7 +18,7 @@ class StudiesControllerTest extends TestCase
 
     use DatabaseMigrations;
 
-    private $repository;
+    protected $repository;
 
 
     /**
@@ -60,10 +62,10 @@ class StudiesControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $studies1 = factory(Study::class,50)->make();
+       // $studies1 = factory(Study::class,50)->make();
         $this->login();
         $this->repository->shouldReceive('all')->once()->andReturn(
-            $this->createDummyStudies()
+            collect([])
         );
 
         $this->repository->shouldReceive('pushCriteria')->once();
@@ -78,7 +80,7 @@ class StudiesControllerTest extends TestCase
         //dd('studies');
 
         $this->assertInstanceOf(Illuminate\Support\Collection::class, $studies);
-        $this->assertEquals(count($studies), 3);
+        $this->assertEquals(count($studies), 0);
 
 //        dd($studies);
         //dd($this->call('GET','studies'));  //val esta o la de baix amb el dump
@@ -98,10 +100,10 @@ class StudiesControllerTest extends TestCase
     public function testStore()
     {
         $this->login();
-        //$this->post('studies');
-        $this->post('studies',[]);
+        Input::replace($input = ['name' => 'My Title']);
+        $this->post('studies',['name' => 'Estudi nou']);
         dd($this->response);
-        //$this->assertRedirectedToRoute('studies.create');
+        $this->assertRedirectedToRoute('studies.create');
 
     }
 
